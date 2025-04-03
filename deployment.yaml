@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-guess-who
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-guess-who
+  template:
+    metadata:
+      labels:
+        app: ai-guess-who
+    spec:
+      containers:
+      - name: ai-guess-who
+        image: ai-guess-who  # Use the locally built image
+        imagePullPolicy: Never  # Prevent Kubernetes from pulling from Docker Hub
+        ports:
+        - containerPort: 8501
