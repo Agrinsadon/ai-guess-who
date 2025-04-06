@@ -12,13 +12,5 @@ AI Guess Who is an interactive game where the AI guesses a character based on th
 ✅ Uses a decision tree to make intelligent guesses  
 ✅ Interactive web app using Streamlit  
 ✅ Users can add new characters to improve AI accuracy  
-
-## Installation:
-Clone the repository and install dependencies:
-
-```sh
-git clone https://github.com/YOUR_GITHUB_USERNAME/ai-guess-who.git
-cd ai-guess-who
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+✅ Dockerized for easy deployment  
+✅ Kubernetes support for scalability

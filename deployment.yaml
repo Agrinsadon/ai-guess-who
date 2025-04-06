@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ai-guess-who
-        image: ai-guess-who  # Use the locally built image
-        imagePullPolicy: Never  # Prevent Kubernetes from pulling from Docker Hub
+        image: ai-guess-who
+        imagePullPolicy: Never
         ports:
         - containerPort: 8501
