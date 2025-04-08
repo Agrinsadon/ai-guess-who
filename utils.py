@@ -1,26 +1,32 @@
+import re
+
 def display_characters(char_list):
-    print("\nCharacters:")
+    print("\nCurrent characters:")
     for char in char_list:
-        print(f"ID: {char['id']}, Name: {char['name']}, Gender: {char['gender']}, Hair Color: {char['hair_color']}, "
-              f"Hair Length: {char['hair_length']}, Glasses: {char['wears_glasses']}, Hat: {char['has_hat']}, Beard: {char['has_beard']}")
+        print(f"{char['id']}: {char['name']}")
+
+def parse_question(question):
+    question = question.lower()
+    if re.search(r'\b(glasses|wear.*glasses|has glasses|spectacles)\b', question):
+        return "glasses"
+    elif re.search(r'\b(hat|wear.*hat|has hat|cap|helmet)\b', question):
+        return "hat"
+    elif re.search(r'\b(beard|has beard|facial hair|bearded)\b', question):
+        return "beard"
+    else:
+        return None
 
 def answer_question(question, character):
-    question = question.lower()
-    if "male" in question or "man" in question:
-        return "Yes" if character["gender"] == "male" else "No"
-    elif "female" in question or "woman" in question:
-        return "Yes" if character["gender"] == "female" else "No"
-    elif "hair color" in question:
-        color = question.split("hair color")[-1].strip()
-        return "Yes" if character["hair_color"] in color else "No"
-    elif "hair length" in question:
-        length = question.split("hair_length")[-1].strip()
-        return "Yes" if character["hair_length"] in length else "No"
-    elif "glasses" in question:
-        return "Yes" if character["wears_glasses"] else "No"
-    elif "hat" in question:
-        return "Yes" if character["has_hat"] else "No"
-    elif "beard" in question:
-        return "Yes" if character["has_beard"] else "No"
-    else:
-        return "I’m not sure how to answer that. Try a yes/no question about gender, hair, glasses, hat, or beard!"
+    keyword = parse_question(question)
+    if keyword is None:
+        return "I don't understand the question."
+    return "yes" if character["attributes"].get(keyword, False) else "no"
+
+def eliminate_characters(remaining_chars, question, expected_answer):
+    keyword = parse_question(question)
+    if keyword is None:
+        print("Couldn't understand which attribute to use for elimination.")
+        return remaining_chars
+
+    expected_bool = True if expected_answer == "yes" else False
+    return [char for char in remaining_chars if char["attributes"].get(keyword) == expected_bool]
